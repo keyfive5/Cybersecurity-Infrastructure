@@ -2,3 +2,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 *.log
+
+# installer build artifacts (transient); the downloadable zip is kept
+installer/build/
+installer/dist/KeywardVault-Setup/

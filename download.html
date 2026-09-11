@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Download Keyward Vault</title>
+  <meta name="description" content="Download the Keyward Vault installer — a CyberArk-style Digital Vault setup wizard for your Windows lab VM or cloud instance.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232dd4bf'/><text x='16' y='23' font-size='20' font-family='sans-serif' font-weight='800' text-anchor='middle' fill='%2306231f'>K</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page { max-width: 860px; margin: 0 auto; padding: 28px 22px 60px; }
+    .hero { text-align: center; padding: 28px 0 8px; }
+    .hero .mark { width: 60px; height: 60px; border-radius: 14px; margin: 0 auto 14px;
+      background: linear-gradient(135deg, var(--brand), var(--key)); display: grid; place-items: center;
+      color: #06231f; font-weight: 800; font-size: 30px; }
+    .hero h1 { font-size: 30px; margin-bottom: 6px; }
+    .dl { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; padding: 14px 26px;
+      font-size: 17px; font-weight: 700; border-radius: 12px; text-decoration: none;
+      background: linear-gradient(180deg, var(--brand), var(--brand2)); color: var(--brandink); box-shadow: var(--shadow); }
+    .dl:hover { filter: brightness(1.07); }
+    .dlmeta { color: var(--muted); font-size: 13px; margin-top: 10px; }
+    .steps { counter-reset: s; list-style: none; padding: 0; margin: 14px 0; }
+    .steps li { counter-increment: s; position: relative; padding: 12px 0 12px 46px; border-bottom: 1px solid var(--line); }
+    .steps li::before { content: counter(s); position: absolute; left: 0; top: 12px; width: 30px; height: 30px;
+      border-radius: 50%; background: var(--panel2); border: 1px solid var(--line2); color: var(--brand);
+      display: grid; place-items: center; font-weight: 700; }
+    code, pre { font-family: var(--mono); }
+    pre { background: #0c1220; border: 1px solid var(--line2); border-radius: 8px; padding: 12px; overflow-x: auto; font-size: 13px; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media (max-width: 700px) { .two { grid-template-columns: 1fr; } }
+    .note { border-left: 3px solid var(--warn); }
+    a.back { color: var(--muted); text-decoration: none; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <a class="back" href="index.html">← Back to the Keyward platform</a>
+    <div class="hero">
+      <div class="mark">K</div>
+      <h1>Keyward Vault</h1>
+      <p class="muted">Deploy the Digital Vault to your own Windows server — the same way you'd stand up a real PAM vault.</p>
+      <a class="dl" href="installer/dist/KeywardVault-Setup.zip" download>⬇ Download Vault Installer</a>
+      <div class="dlmeta">KeywardVault-Setup.zip · ~50&nbsp;KB · Windows 10/11 &amp; Server 2016+ · installs a real Windows service</div>
+    </div>
+
+    <div class="card" style="margin-top:22px">
+      <h2>What's inside</h2>
+      <div class="two">
+        <div>
+          <b>🧩 Setup.exe</b>
+          <p class="muted small">A guided wizard: license, install &amp; safes folders, standalone or cluster mode, operator keys, master &amp; administrator passwords — then it installs and starts the Vault.</p>
+        </div>
+        <div>
+          <b>🗄️ Keyward Vault service</b>
+          <p class="muted small">A real Windows service that loads your keys, validates the license, opens its listener, and runs like a Digital Vault.</p>
+        </div>
+        <div>
+          <b>🖥️ Server Central Administration</b>
+          <p class="muted small">The console to start/stop the Vault and watch its live log — encryption, firewall, cache, "server is up".</p>
+        </div>
+        <div>
+          <b>🔑 Easy licensing</b>
+          <p class="muted small">No license server, no chasing files. The wizard generates a valid Keyward license for you in one click.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Install it on your VM</h2>
+      <ol class="steps">
+        <li><b>Copy the folder to your Vault VM.</b> Download the zip, move it to your VMware/Hyper-V/cloud Windows box, and extract it. (Works the same on an AWS/Azure Windows instance.)</li>
+        <li><b>Run Setup.exe as administrator.</b> Right-click → <i>Run as administrator</i>. If SmartScreen appears, click <i>More info → Run anyway</i> — it's unsigned because it's your own lab build.</li>
+        <li><b>Walk the wizard.</b> Accept the defaults for a standalone lab, choose <i>Generate a Keyward license automatically</i>, and set a Master and Administrator password at the end.</li>
+        <li><b>Watch it run.</b> Open <b>Keyward Server Central Administration</b> from the Start menu (or the install folder) and start the Vault — you'll see the live log, just like a production vault console.</li>
+      </ol>
+    </div>
+
+    <div class="card note" style="margin-top:16px">
+      <b>Domain controller / cluster</b>
+      <p class="muted small" style="margin-bottom:0">Standalone is the right choice for testing. Choose <b>Cluster-node</b> and enter a peer address to model high availability. The Vault runs fine joined to your lab domain — install it on the member server you've prepared as the Vault host, not on the DC itself.</p>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h2>Command line (optional)</h2>
+      <p class="muted small">From an <b>elevated</b> Command Prompt in the extracted folder:</p>
+      <pre>REM Silent install (standalone lab)
+Setup.exe --silent name="Hasan" company="Keyward Lab" master="Str0ng!Pass" admin="Str0ng!Pass"
+
+REM Uninstall (keeps your safes and keys)
+Setup.exe --uninstall</pre>
+    </div>
+
+    <div class="foot" style="text-align:center;margin-top:22px">
+      Keyward — Privileged Access Management · Built by M. Hasan Zafar ·
+      <a href="index.html">Open the platform</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -110,6 +110,10 @@ function dashboard(el, ctx) {
   el.innerHTML = `
     <h1>Welcome, ${esc(user.name.split(' ')[0])}</h1>
     <p class="muted" style="margin-top:0">Here's the state of the environment your role can see.</p>
+    <a href="download.html" class="banner" style="display:flex;gap:10px;align-items:center;text-decoration:none;margin-bottom:18px">
+      <span style="font-size:20px">🗄️</span>
+      <span><b style="color:var(--ink)">Deploy the Vault to your own server</b><span class="muted small"> — download the Keyward Vault installer for a Windows VM or cloud instance →</span></span>
+    </a>
     <div class="tiles" style="margin-bottom:18px">
       ${tile(accts.length, 'Accounts in your safes', '🗝️')}
       ${tile(vault.recordings().length, 'Sessions recorded', '🎥')}

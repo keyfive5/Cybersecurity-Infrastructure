@@ -80,6 +80,37 @@ node tests/run.mjs
   scoped access, rotation + sync + reconcile, PSM recording, PTA detection +
   auto-remediation, and audit-chain tamper detection.
 
+## Deploy the Vault to a server (Windows installer)
+
+Beyond the browser platform, Keyward ships a real **Windows installer** that stands
+up the Vault on a VM or cloud instance the way you'd deploy a production Digital Vault.
+
+- **Download:** https://keyfive5.github.io/Cybersecurity-Infrastructure/download.html
+  (or `installer/dist/KeywardVault-Setup.zip`)
+- **`Setup.exe`** — a wizard (RDP-session check → license → install & safes folders →
+  standalone/cluster → operator keys → Remote Control Agent → message bus → hardening →
+  Start-menu folder → Master & Administrator passwords), with a one-click **license
+  generator** so there's no license server to chase.
+- **`KeywardVault.exe`** — a genuine Windows **service** that loads the operator keys,
+  validates the license, binds port 1858, and logs its startup like a real vault.
+- **`KeywardServerAdmin.exe`** — the **Server Central Administration** console: a
+  traffic-light start/stop and the live Date/Time/Message log.
+
+Build it yourself (no SDK needed — uses the C# compiler built into Windows):
+
+```powershell
+installer\build.ps1     # compiles the 3 exes and packages installer\dist\KeywardVault-Setup.zip
+```
+
+Install silently for testing (elevated):
+
+```
+Setup.exe --silent name="You" company="Lab" master="Str0ng!" admin="Str0ng!"
+```
+
+Source lives in `installer/src/` (`Common.cs` install engine, `Setup.cs` wizard,
+`VaultService.cs` service, `ServerAdmin.cs` console).
+
 ## Architecture
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the data model, the event
